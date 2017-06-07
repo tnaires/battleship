@@ -1,10 +1,9 @@
-var Board = function(origin) {
+var Board = function(origin, state) {
   var
     WIDTH = 330,
     HEIGHT = 330,
-    ROWS_COLS_COUNT = 11,
-    ROW_HEIGHT = HEIGHT / ROWS_COLS_COUNT,
-    COL_WIDTH = WIDTH / ROWS_COLS_COUNT;
+    ROW_HEIGHT = HEIGHT / (state.rowsCount() + 1),
+    COL_WIDTH = WIDTH / (state.colsCount() + 1);
 
   function drawBorder(context) {
     context.beginPath();
@@ -14,13 +13,16 @@ var Board = function(origin) {
   }
 
   function drawGrid(context) {
-    for (var i = 1; i < ROWS_COLS_COUNT; i++) {
-      var
-        x = i * ROW_HEIGHT + origin.x(),
-        y = i * COL_WIDTH + origin.y();
+    for (var i = 1; i <= state.rowsCount(); i++) {
+      var x = i * ROW_HEIGHT + origin.x();
 
       context.moveTo(x, origin.y());
       context.lineTo(x, WIDTH + origin.y());
+    }
+
+    for (var i = 1; i <= state.colsCount(); i++) {
+      var y = i * COL_WIDTH + origin.y();
+
       context.moveTo(origin.x(), y);
       context.lineTo(HEIGHT + origin.x(), y);
     }
@@ -29,20 +31,25 @@ var Board = function(origin) {
   }
 
   function drawLabels(context) {
-    var xInc = 6, yInc = 1, letterA = 65, number1 = 49;
+    var xInc = 6, yInc = 1, letterA = 65;
 
     context.font = '30px Lucida Console';
     context.textAlign = 'left';
     context.textBaseline = 'top';
 
-    for (var i = 1; i <= ROWS_COLS_COUNT - 1; i++) {
+    for (var i = 1; i <= state.colsCount(); i++) {
       var
         x = i * COL_WIDTH + origin.x() + xInc,
-        y = i * ROW_HEIGHT + origin.y() + yInc,
-        letterLabel = String.fromCharCode(letterA + (i - 1)),
-        numberLabel = (i - 1).toString();
+        letterLabel = String.fromCharCode(letterA + (i - 1));
 
       context.fillText(letterLabel, x, origin.y() + yInc);
+    }
+
+    for (var i = 1; i <= state.rowsCount(); i++) {
+      var
+        y = i * ROW_HEIGHT + origin.y() + yInc,
+        numberLabel = (i - 1).toString();
+
       context.fillText(numberLabel, origin.x() + xInc, y);
     }
   }

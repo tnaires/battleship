@@ -3,5 +3,5 @@ var
   canvas = document.getElementById('screen'),
   game = new Game(FPS, canvas);
 
-game.setUp();
+game.init();
 game.start();

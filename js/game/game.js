@@ -8,15 +8,17 @@ var Game = function(fps, canvas) {
       screen.draw();
     };
 
-  this.setUp = function() {
+  this.init = function() {
     screen = new Screen(canvas);
 
     var
-      playerOrigin = new Position(10, 10),
-      playerBoard = new Board(playerOrigin),
+      playerBoardPosition = new Position(10, 10),
+      playerBoardState = new BoardState(10, 10),
+      playerBoard = new Board(playerBoardPosition, playerBoardState),
 
-      enemyOrigin = new Position(410, 200),
-      enemyBoard = new Board(enemyOrigin);
+      enemyBoardPosition = new Position(410, 200),
+      enemyBoardState = new BoardState(10, 10),
+      enemyBoard = new Board(enemyBoardPosition, enemyBoardState);
 
     screen.add(playerBoard);
     screen.add(enemyBoard);
