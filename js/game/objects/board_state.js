@@ -90,6 +90,10 @@ var BoardState = function(rowsCount, colsCount) {
     return colsCount;
   };
 
+  this.positionOccupied = function(x, y) {
+    return board[x][y] !== WATER;
+  }
+
   this.init = function() {
     initBoard();
     randomizeShips();

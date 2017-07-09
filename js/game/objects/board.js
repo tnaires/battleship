@@ -69,6 +69,20 @@ var Board = function(origin, state) {
   };
 
   this.draw = function(context) {
+    for (var i = 1; i <= state.rowsCount(); i++) {
+      for (var j = 1; j <= state.colsCount(); j++) {
+        if (state.positionOccupied(i - 1, j - 1)) {
+          context.fillStyle = 'yellow';
+        } else {
+          context.fillStyle = 'blue';
+        }
 
+        var
+          cornerX = COL_WIDTH * j + origin.x(),
+          cornerY = ROW_HEIGHT * i + origin.y();
+
+        context.fillRect(cornerX + 1, cornerY + 1, COL_WIDTH - 1, ROW_HEIGHT - 1);
+      }
+    }
   };
 };
