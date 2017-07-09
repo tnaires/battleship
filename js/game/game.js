@@ -20,6 +20,9 @@ var Game = function(fps, canvas) {
       enemyBoardState = new BoardState(10, 10),
       enemyBoard = new Board(enemyBoardPosition, enemyBoardState);
 
+    playerBoardState.init();
+    enemyBoardState.init();
+
     screen.add(playerBoard);
     screen.add(enemyBoard);
   };
