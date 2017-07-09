@@ -37,39 +37,28 @@ var BoardState = function(rowsCount, colsCount) {
         direction = directions.splice(Math.floor(Math.random() * directions.length), 1)[0];
         directionChosen = true;
 
-        switch (direction) {
-          case NORTH:
-            for (var j = 1; j < ship.size(); j++) {
-              if (y - j < 0 || board[x][y - j] !== WATER) {
-                directionChosen = false;
-                break;
-              }
+        for (var j = 1; j < ship.size(); j++) {
+          if (direction === NORTH) {
+            if (y - j < 0 || board[x][y - j] !== WATER) {
+              directionChosen = false;
+              break;
             }
-            break;
-          case EAST:
-            for (var j = 1; j < ship.size(); j++) {
-              if (x + j >= colsCount || board[x + j][y] !== WATER) {
-                directionChosen = false;
-                break;
-              }
+          } else if (direction === EAST) {
+            if (x + j >= colsCount || board[x + j][y] !== WATER) {
+              directionChosen = false;
+              break;
             }
-            break;
-          case SOUTH:
-            for (var j = 1; j < ship.size(); j++) {
-              if (y + j >= rowsCount || board[x][y + j] !== WATER) {
-                directionChosen = false;
-                break;
-              }
+          } else if (direction === SOUTH) {
+            if (y + j >= rowsCount || board[x][y + j] !== WATER) {
+              directionChosen = false;
+              break;
             }
-            break;
-          case WEST:
-            for (var j = 1; j < ship.size(); j++) {
-              if (x - j < 0 || board[x - j][y] !== WATER) {
-                directionChosen = false;
-                break;
-              }
+          } else if (direction === WEST) {
+            if (x - j < 0 || board[x - j][y] !== WATER) {
+              directionChosen = false;
+              break;
             }
-            break;
+          }
         }
       } while (!directionChosen);
 
