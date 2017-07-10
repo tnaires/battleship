@@ -17,7 +17,8 @@ var Game = function(fps, canvas) {
 
       enemyBoardPosition = new Position(410, 200),
       enemyBoardState = new BoardState(10, 10),
-      enemyBoard = new Board(enemyBoardPosition, enemyBoardState, true);
+      enemyBoard = new Board(enemyBoardPosition, enemyBoardState, true),
+      enemy = new Enemy(playerBoardState);
 
     playerBoardState.init();
     enemyBoardState.init();
@@ -28,6 +29,7 @@ var Game = function(fps, canvas) {
     canvas.onmousedown = function(e) {
       var canvasRect = canvas.getBoundingClientRect();
       enemyBoard.handleClick(e.clientX - canvasRect.left, e.clientY - canvasRect.top);
+      enemy.play();
     }
   };
 
