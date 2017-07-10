@@ -1,6 +1,8 @@
 var BoardState = function(rowsCount, colsCount) {
   var
     WATER = 0,
+    HIT = 10,
+    MISS = 11,
     NORTH = 'N',
     EAST = 'E',
     SOUTH = 'S',
@@ -92,6 +94,29 @@ var BoardState = function(rowsCount, colsCount) {
 
   this.positionOccupied = function(x, y) {
     return board[x][y] !== WATER;
+  }
+
+  this.positionHit = function(x, y) {
+    return board[x][y] === HIT;
+  }
+
+  this.positionMiss = function(x, y) {
+    return board[x][y] === MISS;
+  }
+
+  this.shoot = function(row, col) {
+    var occupier = board[row][col];
+
+    switch (occupier) {
+      case WATER:
+        board[row][col] = MISS;
+        break;
+      case HIT:
+      case MISS:
+        break;
+      default:
+        board[row][col] = HIT;
+    }
   }
 
   this.init = function() {

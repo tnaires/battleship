@@ -57,10 +57,11 @@ var Board = function(origin, state) {
   this.handleClick = function(x, y) {
     if (x >= origin.x() && y >= origin.y() && x <= origin.x() + WIDTH && y <= origin.y() + HEIGHT) {
       var
-        rowNum = Math.floor((y - origin.y()) / ROW_HEIGHT),
-        colNum = Math.floor((x - origin.x()) / COL_WIDTH);
-      console.log('ROW: ' + rowNum);
-      console.log('COL: ' + colNum);
+        ADJUSTMENT = 2,
+        rowNum = Math.floor((y - origin.y() - ADJUSTMENT) / ROW_HEIGHT),
+        colNum = Math.floor((x - origin.x() - ADJUSTMENT) / COL_WIDTH);
+
+      state.shoot(rowNum - 1, colNum - 1);
     }
   }
 
@@ -81,7 +82,11 @@ var Board = function(origin, state) {
   this.draw = function(context) {
     for (var i = 1; i <= state.rowsCount(); i++) {
       for (var j = 1; j <= state.colsCount(); j++) {
-        if (state.positionOccupied(i - 1, j - 1)) {
+        if (state.positionHit(i - 1, j - 1)) {
+          context.fillStyle = 'red';
+        } else if (state.positionMiss(i - 1, j - 1)) {
+          context.fillStyle = 'orange';
+        } else if (state.positionOccupied(i - 1, j - 1)) {
           context.fillStyle = 'yellow';
         } else {
           context.fillStyle = 'blue';
