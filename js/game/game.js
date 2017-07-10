@@ -1,12 +1,11 @@
 var Game = function(fps, canvas) {
-  var
-    screen,
+  var screen;
 
-    tick = function() {
-      screen.clear();
-      screen.update();
-      screen.draw();
-    };
+  function tick() {
+    screen.clear();
+    screen.update();
+    screen.draw();
+  }
 
   this.init = function() {
     screen = new Screen(canvas);
@@ -25,6 +24,11 @@ var Game = function(fps, canvas) {
 
     screen.add(playerBoard);
     screen.add(enemyBoard);
+
+    canvas.onmousedown = function(e) {
+      var canvasRect = canvas.getBoundingClientRect();
+      enemyBoard.handleClick(e.clientX - canvasRect.left, e.clientY - canvasRect.top);
+    }
   };
 
   this.start = function() {

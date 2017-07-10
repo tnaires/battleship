@@ -54,6 +54,16 @@ var Board = function(origin, state) {
     }
   }
 
+  this.handleClick = function(x, y) {
+    if (x >= origin.x() && y >= origin.y() && x <= origin.x() + WIDTH && y <= origin.y() + HEIGHT) {
+      var
+        rowNum = Math.floor((y - origin.y()) / ROW_HEIGHT),
+        colNum = Math.floor((x - origin.x()) / COL_WIDTH);
+      console.log('ROW: ' + rowNum);
+      console.log('COL: ' + colNum);
+    }
+  }
+
   this.init = function(context) {
     drawBorder(context);
     drawGrid(context);
