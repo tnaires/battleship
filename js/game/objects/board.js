@@ -1,4 +1,4 @@
-var Board = function(origin, state) {
+var Board = function(origin, state, hideObjects) {
   var
     WIDTH = 330,
     HEIGHT = 330,
@@ -83,13 +83,15 @@ var Board = function(origin, state) {
     for (var i = 1; i <= state.rowsCount(); i++) {
       for (var j = 1; j <= state.colsCount(); j++) {
         if (state.positionHit(i - 1, j - 1)) {
-          context.fillStyle = 'red';
-        } else if (state.positionMiss(i - 1, j - 1)) {
           context.fillStyle = 'orange';
+        } else if (state.positionMiss(i - 1, j - 1)) {
+          context.fillStyle = 'blue';
+        } else if (hideObjects) {
+          context.fillStyle = 'white';
         } else if (state.positionOccupied(i - 1, j - 1)) {
           context.fillStyle = 'yellow';
         } else {
-          context.fillStyle = 'blue';
+          context.fillStyle = '#0066cc';
         }
 
         var

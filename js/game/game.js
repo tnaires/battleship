@@ -13,11 +13,11 @@ var Game = function(fps, canvas) {
     var
       playerBoardPosition = new Position(10, 10),
       playerBoardState = new BoardState(10, 10),
-      playerBoard = new Board(playerBoardPosition, playerBoardState),
+      playerBoard = new Board(playerBoardPosition, playerBoardState, false),
 
       enemyBoardPosition = new Position(410, 200),
       enemyBoardState = new BoardState(10, 10),
-      enemyBoard = new Board(enemyBoardPosition, enemyBoardState);
+      enemyBoard = new Board(enemyBoardPosition, enemyBoardState, true);
 
     playerBoardState.init();
     enemyBoardState.init();
