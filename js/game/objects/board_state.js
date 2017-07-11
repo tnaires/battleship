@@ -3,10 +3,6 @@ var BoardState = function(rowsCount, colsCount) {
     WATER = 0,
     HIT = 10,
     MISS = 11,
-    NORTH = 'N',
-    EAST = 'E',
-    SOUTH = 'S',
-    WEST =  'W',
     board = [];
 
   function initBoard() {
@@ -25,7 +21,7 @@ var BoardState = function(rowsCount, colsCount) {
     for (var i = 0; i < Ship.FLEET.length; i++) {
       var
         ship = Ship.FLEET[i],
-        directions = [NORTH, EAST, SOUTH, WEST],
+        directions = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST],
         x, y, direction, directionChosen;
 
       // Randomize positions while not occupied
@@ -40,22 +36,22 @@ var BoardState = function(rowsCount, colsCount) {
         directionChosen = true;
 
         for (var j = 1; j < ship.size(); j++) {
-          if (direction === NORTH) {
+          if (direction === Direction.NORTH) {
             if (y - j < 0 || board[x][y - j] !== WATER) {
               directionChosen = false;
               break;
             }
-          } else if (direction === EAST) {
+          } else if (direction === Direction.EAST) {
             if (x + j >= colsCount || board[x + j][y] !== WATER) {
               directionChosen = false;
               break;
             }
-          } else if (direction === SOUTH) {
+          } else if (direction === Direction.SOUTH) {
             if (y + j >= rowsCount || board[x][y + j] !== WATER) {
               directionChosen = false;
               break;
             }
-          } else if (direction === WEST) {
+          } else if (direction === Direction.WEST) {
             if (x - j < 0 || board[x - j][y] !== WATER) {
               directionChosen = false;
               break;
@@ -67,16 +63,16 @@ var BoardState = function(rowsCount, colsCount) {
       // Place ship
       for (var j = 0; j < ship.size(); j++) {
         switch (direction) {
-          case NORTH:
+          case Direction.NORTH:
             board[x][y - j] = ship.index();
             break;
-          case EAST:
+          case Direction.EAST:
             board[x + j][y] = ship.index();
             break;
-          case SOUTH:
+          case Direction.SOUTH:
             board[x][y + j] = ship.index();
             break;
-          case WEST:
+          case Direction.WEST:
             board[x - j][y] = ship.index();
             break;
         }
@@ -110,12 +106,13 @@ var BoardState = function(rowsCount, colsCount) {
     switch (occupier) {
       case WATER:
         board[row][col] = MISS;
-        break;
+        return BoardState.WATER_HIT;
       case HIT:
       case MISS:
-        break;
+        return BoardState.REPEATED_SHOT;
       default:
         board[row][col] = HIT;
+        return BoardState.SHIP_HIT;
     }
   }
 
@@ -124,3 +121,7 @@ var BoardState = function(rowsCount, colsCount) {
     randomizeShips();
   };
 }
+
+BoardState.REPEATED_SHOT = 0;
+BoardState.SHIP_HIT = 1;
+BoardState.WATER_HIT = 2;
